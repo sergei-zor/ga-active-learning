@@ -61,6 +61,5 @@ for num in tqdm(range(num_matrices)):
     pitch = ext_x / (array_size-1) 
     volume = lattice.voxelized(pitch=pitch).fill()
     mat = volume.matrix.astype(int)
-    
-    mask = mat[mat != 0]    
+ 
     np.save(os.path.join(output_path_binary, f'matrix_{num}.npy'), mat)
