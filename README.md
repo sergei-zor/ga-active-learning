@@ -1,4 +1,6 @@
 # 3D-CNN for Specific Elastic Modulus Prediction
+![image](header.png)
+![CI](https://github.com/sergei-zor/ga-active-learning/actions/workflows/ci.yml/badge.svg)
 
 This repository contains the code for the paper:
 
@@ -8,14 +10,23 @@ by S. Zorkaltsev, J. Segurado, M.T. Pérez-Prado and M. Haranczyk
 
 [Comput. Mater. Sci., vol. 262, p. 114332, 2026.](https://doi.org/10.1016/j.commatsci.2025.114332)
 
-## Repository overview
+## Scope
 
-- `gen_train_matrices.py` — generation of the training data (voxelized lattice structures)  
-- `train_model.py` — 3DCNN training with k-fold cross-validation
-- `DenseNet3D.py` — model architecture definitions  
-- `unit_cells/` — .stl meshes for supercells generation 
-- `initial_population/` — 4×4×4 matrices encoding the cell types
--  `binary_matrices/` — several examples of training structures for the smoke test
+This repository provides the surrogate 3D-CNN model used to guide the optimization in the active learning loop. The optimization loop itself uses an FFT solver to calculate the elastic modulus values, as the values move beyond the training range of the model. The FFT solver is licensed to our collaborators and not included here, it is free for research purposes under a separate agreement (contact [Javier Segurado](mailto:javier.segurado@imdea.org))
+
+For a related, runnable optimization pipeline that uses the same
+kind of surrogate model to guide a genetic algorithm without requiring the
+FFT tool - check [ga-bayesian-opt](https://github.com/sergei-zor/ga-bayesian-opt).
+
+## Repository overview
+ 
+- `unit_cells/` - .stl meshes used to generate lattices
+- `initial_population/` - 1,000 4×4×4 matrices encoding the cell types
+- `binary_matrices/` - 50 examples of pre-generated training structures for the smoke test
+- `.github/workflows/` - a GitHub Actions workflow to perform smoke test
+- `gen_train_matrices.py` - generates the training data (voxelized lattice structures, as in `binary_matrices/`)  
+- `train_model.py` - trains 3D CNN model with k-fold cross-validation
+- `DenseNet3D.py` - contains the model architecture definitions 
 
 ## Dataset generation
 
@@ -69,16 +80,3 @@ url = {https://www.sciencedirect.com/science/article/pii/S0927025625006755},
 author = {Sergei Zorkaltsev and Javier Segurado and María Teresa Pérez-Prado and Maciej Haranczyk},
 keywords = {Genetic algorithm, Optimization, Structure-property relationship, Convolutional neural networks}}
 ```
-## Requirements
-
-The code requires the following Python packages:
-
-- NumPy
-- Pandas
-- PyTorch
-- scikit-learn
-- MLflow
-- tqdm
-- joblib
-- trimesh
-- numpy-stl

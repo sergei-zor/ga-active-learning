@@ -210,17 +210,16 @@ augment_train = True
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 matrix_path = os.path.join(current_dir, 'binary_matrices')
-matrix_path = '/home/sergei/genetic_paper/matrices_rand_binary'
 target_array = np.load(os.path.join(current_dir, 'specific_E.npy'))
 
 if smoke_test:
     batch_size = 1
     n_folds = 2
-    n_epochs = 5
+    n_epochs = 3
     augment_train = False
     n_available = len(os.listdir(matrix_path))
     target_array = target_array[:n_available]
-    print('Running smoke test')
+    print(f'Running smoke test with {n_available} lattice structures')
     
 if not smoke_test:
     if len(target_array) != len(os.listdir(matrix_path)):
